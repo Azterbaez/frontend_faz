@@ -1,5 +1,4 @@
 import{useState} from "react";
-
 import './App.css';
 
 const App = () => {
@@ -8,7 +7,5 @@ const App = () => {
 <h1> campana de velen </h1>
   </>
   );
-
 }
-
 export default App;
