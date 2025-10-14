@@ -1,16 +1,40 @@
-import{useState} from "react";
-import './App.css';
-import Titulo from "./components/Titulo.jsx";
-import Mensaje from "./components/Mensaje.jsx";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+//Importar componente Encabezado.
+import Encabezado from "./components/navegacion/Encabezado";
 
-const App = () => {
-  return ( 
-  <>
-<h1> campana de velen </h1>
-   <Titulo/>
-    <Mensaje/>
-  </>
+//Importar las vistas.
+import Login from "./views/login";
+import Inicio from "./views/Inicio";
+import Usuario from "./views/Usuario";
+import Cliente from "./views/Cliente";
+import Ventas from "./views/Ventas";
+import Empleados from "./views/Empleados";
+import Categorias from "./views/Categorias";
+import Producto from "./views/Producto";
+import Catalogo from "./views/Catalogo";
+
+//Importar archivo de estilos.
+import "./App.css";
+
+const App = () =>{
+  return (
+    <Router>
+      <Encabezado />a
+      <main className="margen-superior-main">
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/usuarios" element={<Usuario />} />
+          <Route path="/clientes" element={<Cliente />} />
+          <Route path="/ventas" element={<Ventas />} />
+          <Route path="/empleados" element={<Empleados />} />
+          <Route path="/categorias" element={<Categorias />} />
+          <Route path="/producto" element={<Producto />} />
+          <Route path="/catalogo" element={<Catalogo />} />
+          <Route path="*" element={<h2>404 - Página no encontrada</h2>} />
+        </Routes>
+      </main>
+    </Router>
   );
 }
 export default App;
-
