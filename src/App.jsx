@@ -8,6 +8,7 @@ import Inicio from "./views/Inicio";
 import Usuario from "./views/Usuario";
 import Cliente from "./views/Cliente";
 import Ventas from "./views/Ventas";
+import Compras from "./views/Compras";
 import Empleados from "./views/Empleados";
 import Categorias from "./views/Categorias";
 import Producto from "./views/Producto";
@@ -25,8 +26,9 @@ const App = () =>{
           <Route path="/" element={<Inicio />} />
           <Route path="/login" element={<Login />} />
           <Route path="/usuarios" element={<Usuario />} />
-          <Route path="/clientes" element={<Cliente />} />
+          <Route path="/cliente" element={<Cliente />} />
           <Route path="/ventas" element={<Ventas />} />
+          <Route path="/compras" element={<Compras />} />
           <Route path="/empleados" element={<Empleados />} />
           <Route path="/categorias" element={<Categorias />} />
           <Route path="/producto" element={<Producto />} />

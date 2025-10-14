@@ -42,10 +42,72 @@ const manejarNavegacion = (ruta) => {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="flex-grow-1 pe-3">
-              <Nav.Link onClick={() => manejarNavegacion("/")}>Inicio</Nav.Link>
-              <Nav.Link onClick={() => manejarNavegacion("/categorias")}>Categorías</Nav.Link>
-              <Nav.Link onClick={() => manejarNavegacion("/producto")}>Producto</Nav.Link>
-              <Nav.Link onClick={() => manejarNavegacion("/catalogo")}>Catálogo</Nav.Link>
+
+              <Nav.Link 
+              ClasssName= {mostrarMenu ? "texto-marca2" : "text-white" }
+              onClick={() => manejarNavegacion("/")}
+                >
+                 {mostrarMenu ? <i className="bi-house-fill me-2 "></i> : null } inicio
+                </Nav.Link>
+
+              <Nav.Link 
+              ClasssName= {mostrarMenu ? "texto-marca2" : "text-white" }
+              onClick={() => manejarNavegacion("/categorias")}
+                >
+                    {mostrarMenu ? <i className="bi-bookmark-fill me-2 "></i> : null } Categorías
+                </Nav.Link>
+
+              <Nav.Link 
+               ClasssName= {mostrarMenu ? "texto-marca2" : "text-white" }
+             
+              onClick={() => manejarNavegacion("/producto")}
+                >
+                    {mostrarMenu ? <i className="bi-box-fill me-2 "></i> : null } Producto
+                </Nav.Link>
+
+              <Nav.Link 
+             ClasssName= {mostrarMenu ? "texto-marca2" : "text-white" } 
+              onClick={() => manejarNavegacion("/cliente")}
+                >
+                    {mostrarMenu ? <i className="bi-person-circle me-2 "></i> : null } Cliente
+                </Nav.Link>
+
+              <Nav.Link 
+             ClasssName= {mostrarMenu ? "texto-marca2" : "text-white" }
+              onClick={() => manejarNavegacion("/empleados")}
+                >
+                    {mostrarMenu ? <i className="bi-people-fill me-2 "></i> : null } Empleados
+                </Nav.Link>
+
+              <Nav.Link 
+             ClasssName= {mostrarMenu ? "texto-marca2" : "text-white" }
+              onClick={() => manejarNavegacion("/usuarios")}
+                >  {mostrarMenu ? <i className="bi-person-circle me-2 "></i> : null } Usuarios
+                </Nav.Link>
+
+              <Nav.Link 
+               ClasssName= {mostrarMenu ? "texto-marca2" : "text-white" }
+              onClick={() => manejarNavegacion("/ventas")}
+                >
+                     {mostrarMenu ? <i className="bi-graph-up-arrow me-2 "></i> : null } Ventas
+                </Nav.Link>
+              
+               <Nav.Link 
+               ClasssName= {mostrarMenu ? "texto-marca2" : "text-white" }
+              onClick={() => manejarNavegacion("/compras")}
+                >
+                     {mostrarMenu ? <i className="bi-basket-fill me-2 "></i> : null } Compras
+                </Nav.Link>
+
+
+
+              <Nav.Link 
+             ClasssName= {mostrarMenu ? "texto-marca2" : "text-white" }
+              onClick={() => manejarNavegacion("/catalogo")}
+                >
+                    {mostrarMenu ? <i className="bi-list-check me-2 "></i> : null } Catálogo
+                </Nav.Link>
+
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
