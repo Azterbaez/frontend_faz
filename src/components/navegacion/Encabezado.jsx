@@ -67,9 +67,9 @@ const manejarNavegacion = (ruta) => {
 
               <Nav.Link 
              ClasssName= {mostrarMenu ? "texto-marca2" : "text-white" } 
-              onClick={() => manejarNavegacion("/cliente")}
+              onClick={() => manejarNavegacion("/clientes")}
                 >
-                    {mostrarMenu ? <i className="bi-person-circle me-2 "></i> : null } Cliente
+                    {mostrarMenu ? <i className="bi-person-circle me-2 "></i> : null } Clientes
                 </Nav.Link>
 
               <Nav.Link 
