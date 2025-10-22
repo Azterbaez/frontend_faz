@@ -5,13 +5,13 @@ import Encabezado from "./components/navegacion/Encabezado";
 //Importar las vistas.
 import Login from "./views/login";
 import Inicio from "./views/Inicio";
-import Usuario from "./views/Usuario";
+import Usuarios from "./views/Usuarios";
 import Cliente from "./views/Clientes";
 import Ventas from "./views/Ventas";
 import Compras from "./views/Compras";
 import Empleados from "./views/Empleados";
 import Categorias from "./views/Categorias";
-import Producto from "./views/Producto";
+import Productos from "./views/Productos";
 import Catalogo from "./views/Catalogo";
 
 //Importar archivo de estilos.
@@ -25,13 +25,13 @@ const App = () =>{
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/usuarios" element={<Usuario />} />
+          <Route path="/Usuarios" element={<Usuarios />} />
           <Route path="/Clientes" element={<Cliente />} />
           <Route path="/ventas" element={<Ventas />} />
           <Route path="/compras" element={<Compras />} />
           <Route path="/empleados" element={<Empleados />} />
           <Route path="/Categorias" element={<Categorias />} />
-          <Route path="/producto" element={<Producto />} />
+          <Route path="/Productos" element={<Productos />} />
           <Route path="/catalogo" element={<Catalogo />} />
           <Route path="*" element={<h2>404 - Página no encontrada</h2>} />
         </Routes>

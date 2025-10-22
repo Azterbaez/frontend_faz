@@ -60,9 +60,9 @@ const manejarNavegacion = (ruta) => {
               <Nav.Link 
                ClasssName= {mostrarMenu ? "texto-marca2" : "text-white" }
              
-              onClick={() => manejarNavegacion("/producto")}
+              onClick={() => manejarNavegacion("/Productos")}
                 >
-                    {mostrarMenu ? <i className="bi-box-fill me-2 "></i> : null } Producto
+                    {mostrarMenu ? <i className="bi-box-fill me-2 "></i> : null } Productos
                 </Nav.Link>
 
               <Nav.Link 
@@ -81,7 +81,7 @@ const manejarNavegacion = (ruta) => {
 
               <Nav.Link 
              ClasssName= {mostrarMenu ? "texto-marca2" : "text-white" }
-              onClick={() => manejarNavegacion("/usuarios")}
+              onClick={() => manejarNavegacion("/Usuarios")}
                 >  {mostrarMenu ? <i className="bi-person-circle me-2 "></i> : null } Usuarios
                 </Nav.Link>
 
