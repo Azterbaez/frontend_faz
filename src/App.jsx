@@ -30,7 +30,7 @@ const App = () =>{
           <Route path="/ventas" element={<Ventas />} />
           <Route path="/compras" element={<Compras />} />
           <Route path="/empleados" element={<Empleados />} />
-          <Route path="/categorias" element={<Categorias />} />
+          <Route path="/Categorias" element={<Categorias />} />
           <Route path="/producto" element={<Producto />} />
           <Route path="/catalogo" element={<Catalogo />} />
           <Route path="*" element={<h2>404 - Página no encontrada</h2>} />
