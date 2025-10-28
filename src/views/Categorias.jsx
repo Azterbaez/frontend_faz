@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TablaCategorias from "../components/categorias/TablaCategorias";
 import { Container, Col, Row, Button } from 'react-bootstrap';
 import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
+import ModalRegistroCategoria from '../components/categorias/ModalRegistroCategoria';
 
 
 const Categorias = () => {
@@ -10,6 +11,19 @@ const Categorias = () => {
 
     const [categoriasFiltradas, setCategoriasFiltradas] = useState([]);
     const [textoBusqueda, setTextoBusqueda] = useState("");
+
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [nuevaCategoria, setNuevaCategoria] = useState({
+        nombre_categoria: '',
+        descripcion_categoria: ''
+    });
+
+    const manejarCambioInput = (e) => {
+        const { name, value } = e.target;
+        setNuevaCategoria(prev => ({ ...prev, [name]: value }));
+    };
+
+
 
 
     const obtenerCategorias = async () => {
@@ -43,6 +57,29 @@ const Categorias = () => {
         setCategoriasFiltradas(filtradas);
     };
 
+    const agregarCategoria = async () => {
+        if (!nuevaCategoria.nombre_categoria.trim()) return;
+
+        try {
+            const respuesta = await fetch('http://localhost:3000/api/registrarcategoria', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(nuevaCategoria)
+            });
+
+            if (!respuesta.ok) throw new Error('Error al guardar');
+
+            // Limpiar y cerrar
+            setNuevaCategoria({ nombre_categoria: '', descripcion_categoria: '' });
+            setMostrarModal(false);
+            await obtenerCategorias(); // Refresca la lista
+        } catch (error) {
+            console.error("Error al agregar categoría:", error);
+            alert("No se pudo guardar la categoría. Revisa la consola.");
+        }
+    };
+
+
 
     useEffect(() => {
         obtenerCategorias();
@@ -59,10 +96,29 @@ const Categorias = () => {
                             manejarCambioBusqueda={manejarCambioBusqueda}
                         />
                     </Col>
+                    <Col className="text-end">
+
+                        <Button
+                            variant="primary"
+                            onClick={() => setMostrarModal(true)}
+                        >
+                            + Nueva Categoría
+                        </Button>
+                    </Col>
+
                 </Row>
                 <TablaCategorias
                     categorias={categoriasFiltradas}
                     cargando={cargando} />
+
+                <ModalRegistroCategoria
+                    mostrarModal={mostrarModal}
+                    setMostrarModal={setMostrarModal}
+                    nuevaCategoria={nuevaCategoria}
+                    manejarCambioInput={manejarCambioInput}
+                    agregarCategoria={agregarCategoria}
+                />
+
             </Container>
         </>
     );
