@@ -110,7 +110,6 @@ const ModalRegistroCliente = ({
         <Button
           variant="primary"
           onClick={agregarCliente}
-          
         >
           Guardar Cliente
         </Button>
