@@ -19,7 +19,7 @@ const TablaUsuario = ({ Usuarios, cargado }) => {
                     <tr>
                         <th>ID</th>
                         <th>usuario </th>
-                        <th>contraseña</th>
+                        <th>contrasena</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -28,7 +28,7 @@ const TablaUsuario = ({ Usuarios, cargado }) => {
                         <tr key={usuario.id_Usuario}>
                             <td>{usuario.id_Usuario}</td>
                             <td>{usuario.usuario}</td>
-                            <td>{usuario.contraseña}</td>
+                            <td>{usuario.contrasena}</td>
 
                             <td>Acción</td>
                         </tr>

@@ -12,7 +12,7 @@ const Usuarios = () => {
     const [mostrarModal, setMostrarModal] = useState(false);
     const [nuevoUsuario, setNuevoUsuario] = useState({
         usuario: '',
-        contraseña: ''
+        contrasena: ''
     });
 
     const manejarCambioBusqueda = (e) => {
@@ -22,7 +22,7 @@ const Usuarios = () => {
         const filtradas = usuarios.filter(
             (usuarios) =>
                 usuarios.usuarios.toLowerCase().includes(texto) ||
-                usuarios.contraseña.toLowerCase().includes(texto)
+                usuarios.contrasena.toLowerCase().includes(texto)
         );
         setUsuariosFiltradas(filtradas);
     };
@@ -48,7 +48,7 @@ const Usuarios = () => {
         if (!nuevoUsuario.usuario.trim()) return;
 
         try {
-            const respuesta = await fetch('http://localhost:3000/api/registrarusuario', {
+            const respuesta = await fetch('http://localhost:3000/api/registrarUsuario', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(nuevoUsuario)

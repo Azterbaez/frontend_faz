@@ -3,7 +3,7 @@ import { Modal, Form, Button } from "react-bootstrap";
 const ModalRegistroUsuario = ({
   mostrarModal,
   setMostrarModal,
-  nuevousuario,
+  nuevoUsuario,
   manejarCambioInput,
   agregarUsuario,
 }) => {
@@ -21,7 +21,7 @@ const ModalRegistroUsuario = ({
             <Form.Control
               type="text"
               name="usuario"
-              value={nuevousuario.usuario}
+              value={nuevoUsuario.usuario}
               onChange={manejarCambioInput}
               placeholder="Ej: Mario"
               maxLength={20}
@@ -35,7 +35,7 @@ const ModalRegistroUsuario = ({
               as="textarea"
               rows={3}
               name="contraseña"
-              value={nuevousuario.contraseña}
+              value={nuevoUsuario.contrasena}
               onChange={manejarCambioInput}
               placeholder="Descripción opcional (máx. 100 caracteres)"
               maxLength={100}
@@ -50,7 +50,7 @@ const ModalRegistroUsuario = ({
         <Button
           variant="primary"
           onClick={agregarUsuario}
-          disabled={!nuevousuario.usuario.trim()}
+          disabled={!nuevoUsuario.usuario.trim()}
         >
           Guardar Usuario
         </Button>
