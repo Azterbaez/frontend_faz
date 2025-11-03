@@ -8,37 +8,34 @@ const ModalRegistroUsuario = ({
   agregarUsuario,
 }) => {
   return (
-    <Modal  backdrop = "static" show={mostrarModal} onHide={() => setMostrarModal(false)} centered>
-      
-      
+    <Modal backdrop="static" show={mostrarModal} onHide={() => setMostrarModal(false)} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Agregar Nuevo usuario</Modal.Title>
+        <Modal.Title>Agregar Nuevo Usuario</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group className="mb-3" controlId="usuario">
-            <Form.Label>Nombre del usuario</Form.Label>
+          <Form.Group className="mb-3" controlId="Usuario">
+            <Form.Label>Nombre del Usuario</Form.Label>
             <Form.Control
               type="text"
               name="usuario"
               value={nuevoUsuario.usuario}
               onChange={manejarCambioInput}
-              placeholder="Ej: Mario"
+              placeholder="Ej: JuanPerez"
               maxLength={20}
               required
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="contraseña">
-            <Form.Label>contraseña</Form.Label>
+          <Form.Group className="mb-3" controlId="Contraseña">
+            <Form.Label>Contraseña</Form.Label>
             <Form.Control
-              as="textarea"
-              rows={3}
+              type="password"
               name="contraseña"
-              value={nuevoUsuario.contrasena}
+              value={nuevoUsuario.contraseña}
               onChange={manejarCambioInput}
-              placeholder="Descripción opcional (máx. 100 caracteres)"
-              maxLength={100}
+              placeholder="Ingrese la contraseña"
+              maxLength={20}
             />
           </Form.Group>
         </Form>
