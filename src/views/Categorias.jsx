@@ -3,7 +3,8 @@ import TablaCategorias from "../components/categorias/TablaCategorias";
 import { Container, Col, Row, Button } from 'react-bootstrap';
 import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
 import ModalRegistroCategoria from '../components/categorias/ModalRegistroCategoria';
-
+import ModalEdicionCategoria from '../components/categorias/ModalEdicionCategoria';
+import ModalEliminacionCategoria from '../components/categorias/ModaleliminacionCategoria';
 
 const Categorias = () => {
     const [categorias, setCategorias] = useState([]);
@@ -17,14 +18,59 @@ const Categorias = () => {
         nombre_categoria: '',
         descripcion_categoria: ''
     });
+    const [mostrarModalEdicion, setMostrarModalEdicion] = useState(false);
+    const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false);
+
+    const [categoriaEditada, setCategoriaEditada] = useState(null);
+    const [categoriaAEliminar, setCategoriaAEliminar] = useState(null);
+
 
     const manejarCambioInput = (e) => {
         const { name, value } = e.target;
         setNuevaCategoria(prev => ({ ...prev, [name]: value }));
     };
+    const abrirModalEdicion = (categoria) => {
+        setCategoriaEditada({ ...categoria });
+        setMostrarModalEdicion(true);
+    };
 
+    const guardarEdicion = async () => {
+        if (!categoriaEditada.nombre_categoria.trim()) return;
+        try {
+            const respuesta = await fetch(`http://localhost:3000/api/actualizarcategoria/${categoriaEditada.id_categoria}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(categoriaEditada)
+            });
+            if (!respuesta.ok) throw new Error('Error al actualizar');
+            setMostrarModalEdicion(false);
+            await obtenerCategorias();
+        } catch (error) {
+            console.error("Error al editar categoría:", error);
+            alert("No se pudo actualizar la categoría.");
+        }
+    };
 
+    const abrirModalEliminacion = (categorias) => {
+        setCategoriaAEliminar(categorias);
+        setMostrarModalEliminar(true);
+    };
 
+    const confirmarEliminacion = async () => {
+        try {
+            const respuesta = await fetch(`http://localhost:3000/api/eliminarcategoria/${categoriaAEliminar.id_categoria}`, {
+                method: 'DELETE',
+            });
+            if (!respuesta.ok) throw new Error('Error al eliminar');
+            setMostrarModalEliminar(false);
+            setCategoriaAEliminar(null);
+            await obtenerCategorias();
+        } catch (error) {
+            console.error("Error al eliminar categoría:", error);
+            alert("No se pudo eliminar la categoría.");
+        }
+
+    };
 
     const obtenerCategorias = async () => {
         try {
@@ -109,7 +155,11 @@ const Categorias = () => {
                 </Row>
                 <TablaCategorias
                     categorias={categoriasFiltradas}
-                    cargando={cargando} />
+                    cargando={cargando}
+                    abrirModalEdicion={abrirModalEdicion}
+                    abrirModalEliminacion={abrirModalEliminacion}
+
+                />
 
                 <ModalRegistroCategoria
                     mostrarModal={mostrarModal}
@@ -118,10 +168,25 @@ const Categorias = () => {
                     manejarCambioInput={manejarCambioInput}
                     agregarCategoria={agregarCategoria}
                 />
+                <ModalEdicionCategoria
+                    mostrar={mostrarModalEdicion}
+                    setMostrar={setMostrarModalEdicion}
+                    categoriaEditada={categoriaEditada}
+                    setCategoriaEditada={setCategoriaEditada}
+                    guardarEdicion={guardarEdicion}
+                />
+                <ModalEliminacionCategoria
+                    mostrar={mostrarModalEliminar}
+                    setMostrar={setMostrarModalEliminar}
+                    categoria={categoriaAEliminar}
+                    confirmarEliminacion={confirmarEliminacion}
+                />
+
 
             </Container>
         </>
     );
+
 }
 
 
