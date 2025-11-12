@@ -5,6 +5,10 @@ import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
 import ModalRegistroProducto from '../components/producto/ModalRegistroProducto';
 import ModalEdicionProducto from '../components/producto/ModalEdicionProducto';
 import ModalEliminacionProducto from "../components/producto/ModalEliminacionProducto";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import * as XLSX from 'xlsx';
+import {saveAs} from 'file-saver';
 
 const Productos = () => {
   const [productos, setProductos] = useState([]);
@@ -22,6 +26,101 @@ const Productos = () => {
     stock: '',
     imagen: ''
   });
+  const generarPDFProductos = () => {
+  
+    const doc = new jsPDF();
+
+    doc.setFillColor(28, 41, 51);
+    doc.rect(0, 0, 220, 30, 'F');
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(28);
+    doc.text("Listado de Productos", doc.internal.gageSize.getWidth() / 2, 18, { aling: "center" });
+  
+
+  const columnas = ["ID", "Nombre", "Descripción", "Categoría", "Precio", "Stock"];
+  const filas = productosFiltrados.map((producto) => [
+    producto.id_producto,
+    producto.nombre_producto,
+    producto.descripcion_producto,
+    producto.id_categoria,
+    `C$ ${producto.precio_unitario}`,
+    producto.stock,
+  ]);
+
+  const totalPaginas = "{total_pages_count_string}";
+  if (typeof doc.putTotalPages === 'function') {
+    doc.putTotalPages(totalPaginas);
+  }
+
+  autoTable(doc, {
+    head: [columnas],
+    body: filas,
+    startY: 40,
+    theme: 'grid',
+    styles: { fontSize: 10, cellPadding: 2},
+    margins: { top: 20, left: 14, right: 14 },
+  columnStyles: {
+    0: { cellWidth: 'auto' },
+    1: { cellWidth: 'auto' },
+    2: { cellWidth: 'auto' },
+  },
+  pageBreak: "auto",
+  rowPageBreak: "auto",
+
+  didDrawPage: function (data) {
+
+        const alturaPagina = doc.internal.pageSize.getHeight();
+        const anchoPagia = doc.internal.pageSize.getWidthe();
+
+        const numeroPagina = doc.internal.getNumeroOfPages();
+
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        const piePagina = 'Página ${numeroPagina} de ${totalPaginas}';
+        doc.text(piePagina, anchoPagia / 2 + 15, alturaPagina - 10, { align: "center" });
+      },
+});
+
+// Guardar el PDF con un nombre basado en la fecha actual
+const fecha = new Date();
+const dia = String(fecha.getDate()).padStart(2, '0');
+const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+const anio = fecha.getFullYear();
+const nombreArchivo = 'Productosos_${dia}${mes}${anio).pdf';
+
+doc.save(nombreArchivo);
+
+const generarPDFDetalleProducto = (producto) => {
+const pdf = new jsPDF();
+}
+const anchoPagina = pdf.internal.pageSize.getWidth();
+// Encabezado
+pdf.setFillColor(28, 41, 51);
+pdf.rect(0, 0, 220, 30, 'F');
+pdf.setTextColor(255, 255, 255);
+pdf.setFontSize(22);
+pdf.text(producto.nombre_producto, anchoPagina / 2, 18, { align: "center" });
+
+let posicionY = 50;
+if (producto, imagen) {
+const propiedadesImagen = pdf.getImageProperties(producto.imagen);
+const anchoImagen = 100;
+const altoImagen = (propiedadesImagen.height * anchoImagen) / propiedadesImagen.width;
+const posicionX = (anchoPagina - anchoImagen) / 2;
+
+pdf.addImage(producto.imagen, JPEG, posictonX, 46, anchoImagen, altoImagen);
+posiciony  = 40 + altoImagen + 10;
+}
+pdf.setTextColor(8, 9, 8);
+pdf.setFontSize(14);
+
+pdf.text("Descripción: ${producto.descripcion_producto}", anchoPagina /2, posiciony, {align: "center" });
+ pdf.text("Categoría: ${producto.id_categoria}", anchoPagina / 2, posiciony + 16, { align: "center" });
+pdf.text("Precio: C$ ${ producto.precio_unitario}", anchoPagina / 2, posiciony + 20, { align: "center" });
+pdf.text("Stock: ${ producto.stock }", anchoPagina / 2, posiciony + 30, {align: "center" });
+pdf.save("${producto.nombre_producto}.pdf");
+}
 
   const [mostrarModalEdicion, setMostrarModalEdicion] = useState(false);
   const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false);
@@ -154,7 +253,19 @@ const Productos = () => {
             + Nuevo Producto
           </Button>
         </Col>
+       <Col lg = {3} md = {4} sm = {4} xs  = {5}>
+      <Button
+            className="mb-3"
+            onClick={generarPDFProductos}
+            variant="secondary"
+            style={{ width: "100%" }}
+          >
+            Generar reporte PDF
+          </Button>
+        </Col>
+
       </Row>
+
 
       <TablaProductos
         productos={productosPaginados}
@@ -190,5 +301,7 @@ const Productos = () => {
     </Container>
   );
 };
+
+
 
 export default Productos;

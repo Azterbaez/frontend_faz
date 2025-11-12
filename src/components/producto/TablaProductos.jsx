@@ -102,6 +102,16 @@ const TablaProductos = ({
                   <i className="bi bi-trash"></i>
                 </Button>
               </td>
+              <td>
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  className="me-2"
+                  onClick={() => generarPDFDetalleProducto(producto)}
+                >
+                  <i className="bi bi-file-earmark-pdf"></i> PDF
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>
