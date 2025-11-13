@@ -263,7 +263,16 @@ pdf.save("${producto.nombre_producto}.pdf");
             Generar reporte PDF
           </Button>
         </Col>
-
+     <Col className="generar reporte">
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  className="me-2"
+                  onClick={() => generarPDFDetalleProducto(producto)}
+                >
+                  <i className="bi bi-file-earmark-pdf"></i> PDF
+                </Button>
+              </Col>
       </Row>
 
 

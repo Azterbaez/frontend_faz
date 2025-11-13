@@ -16,7 +16,7 @@ const Targeta = ({ indice,
                 <Card border="">
                     <Card.Img
                         variant="top"
-                        src={'data:image/png;base64,${imagen}'}
+                        src={`data:image/png;base64,${imagen}`} // poner `` com alf 96 
                     />
                     <Card.Body>
                         <Card.Title>
