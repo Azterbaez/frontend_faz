@@ -5,6 +5,7 @@ import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
 import ModalRegistroCategoria from '../components/categorias/ModalRegistroCategoria';
 import ModalEdicionCategoria from '../components/categorias/ModalEdicionCategoria';
 import ModalEliminacionCategoria from '../components/categorias/ModaleliminacionCategoria';
+import { Zoom } from 'react-awesome-reveal';
 
 const Categorias = () => {
     const [categorias, setCategorias] = useState([]);
@@ -162,6 +163,7 @@ const categoriasPaginadas = categoriasFiltradas.slice(
                     </Col>
 
                 </Row>
+                <Zoom cascade triggerOnce delay = {100}>
               <TablaCategorias
                     categorias={categoriasPaginadas}
                     cargando={cargando}
@@ -172,6 +174,7 @@ const categoriasPaginadas = categoriasFiltradas.slice(
                     paginaActual={paginaActual} // Página actual
                     establecerPaginaActual={establecerPaginaActual} // Método para cambiar página
                 />
+                </Zoom>
 
 
                 <ModalRegistroCategoria
