@@ -6,6 +6,14 @@ const Encabezado = () => {
   const [mostrarMenu, setMostrarMenu] = useState(false);
   const navigate = useNavigate();
 
+  const cerrarSesion = () => {
+  localStorage.removeItem("usuario");
+  localStorage.removeItem("contrasena");
+
+  setMostrarMenu(false); // Cierra el menú si está abierto
+  navigate("/"); // Envía al login
+}; 
+
   // Alternar visibilidad del menú
   const manejarToggle = () => setMostrarMenu(!mostrarMenu);
 
@@ -103,6 +111,13 @@ const Encabezado = () => {
                 onClick={() => manejarNavegacion("/compras")}
               >
                 {mostrarMenu && <i className="bi bi-basket-fill"></i>} Compras
+              </Nav.Link>
+              <Nav.Link
+                className={mostrarMenu ? "texto-marca" : "text-white"}
+                onClick={cerrarSesion}
+              >
+                {mostrarMenu ? <i className="bi-door-closed-fill me-2"></i> : null}
+                Cerrar Sesión
               </Nav.Link>
             </Nav>
           </Offcanvas.Body>

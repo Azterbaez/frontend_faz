@@ -1,79 +1,59 @@
-import React, {useState} from "react";
-import {Table, Spinner} from "react-bootstrap";
-import BotonOrden from "../ordenamiento/BotonOrden";
+import { Table, Button, Spinner } from "react-bootstrap";
 
-const TablaUsuarios = ({usuarios, cargando}) => {
-
-  const [orden, setOrden] = useState({ campo: "id_usuario", direccion: "asc" });
-  
-    const manejarOrden = (campo) => {
-      setOrden((prev) => ({
-        campo,
-        direccion:
-          prev.campo === campo && prev.direccion === "asc" ? "desc" : "asc",
-      }));
-    };
-  
-    const usuariosOrdenadas = [...usuarios].sort((a, b) => {
-      const valorA = a[orden.campo];
-      const valorB = b[orden.campo];
-  
-      if (typeof valorA === "number" && typeof valorB === "number") {
-        return orden.direccion === "asc" ? valorA - valorB : valorB - valorA;
-      }
-  
-      const comparacion = String(valorA).localeCompare(String(valorB));
-      return orden.direccion === "asc" ? comparacion : -comparacion;
-    });
-  
-
-  if (cargando){
+const TablaUsuarios = ({
+  usuarios,
+  cargando,
+  onEditar,      // (usuario) => void
+  onEliminar,    // (usuario) => void
+}) => {
+  if (cargando) {
     return (
-        <>
-          <Spinner animation = "border">
-            <span className="visually-hidden">Cargando...</span>
-          </Spinner>
-        </>
+      <div className="d-flex justify-content-center py-4">
+        <Spinner animation="border" />
+      </div>
     );
   }
 
+  if (!usuarios?.length) {
+    return <p className="text-muted">No hay usuarios registrados.</p>;
+  }
+
   return (
-    <>
-    <Table striped bordered hover>
+    <Table striped bordered hover responsive className="mt-3">
       <thead>
         <tr>
-<BotonOrden campo="id_usuario" orden={orden} manejarOrden={manejarOrden}>
-  ID
-</BotonOrden>
-
-<BotonOrden campo="usuario" orden={orden} manejarOrden={manejarOrden}>
-  Usuario
-</BotonOrden>
-
-<BotonOrden campo="contraseña" orden={orden} manejarOrden={manejarOrden}>
-  Contraseña
-</BotonOrden>
+          <th>ID</th>
+          <th>Usuario</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-       {usuariosOrdenadas.map((usuario) => {
-        return (
-          <tr key ={usuario.id_usuario}> 
-          <td>{usuario.id_usuario}</td>
-            <td>{usuario.usuario}</td>
-             <td>{usuario.contraseña}</td>
-            <td>Acción</td>
+        {usuarios.map((u) => (
+          <tr key={u.id_usuario}>
+            <td>{u.id_usuario}</td>
+            <td>{u.usuario}</td>
+            <td className="text-nowrap">
+              <Button
+                variant="outline-primary"
+                size="sm"
+                className="me-2"
+                onClick={() => onEditar(u)}
+              >
+                Editar
+              </Button>
+              <Button
+                variant="outline-danger"
+                size="sm"
+                onClick={() => onEliminar(u)}
+              >
+                Eliminar
+              </Button>
+            </td>
           </tr>
-        );
-       })}
+        ))}
       </tbody>
     </Table>
-    </>
   );
-
-}
-
-
+};
 
 export default TablaUsuarios;

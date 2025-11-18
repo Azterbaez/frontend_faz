@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Encabezado from "./components/navegacion/Encabezado";
 
 //Importar las vistas.
-import Login from "./views/login";
+import Login from "./views/Login";
 import Inicio from "./views/Inicio";
 import Usuarios from "./views/Usuarios";
 import Cliente from "./views/Clientes";
@@ -13,6 +13,7 @@ import Empleados from "./views/Empleados";
 import Categorias from "./views/Categorias";
 import Productos from "./views/Productos";
 import Catalogo from "./views/Catalogo";
+import RutaProtegida from "./components/rutas/RutaProtegida";
 
 //Importar archivo de estilos.
 import "./App.css";
@@ -23,8 +24,8 @@ const App = () =>{
       <Encabezado />a
       <main className="margen-superior-main">
         <Routes>
-          <Route path="/" element={<Inicio />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/inicio" element={<Inicio />} />
           <Route path="/Usuarios" element={<Usuarios />} />
           <Route path="/Clientes" element={<Cliente />} />
           <Route path="/ventas" element={<Ventas />} />
@@ -33,6 +34,7 @@ const App = () =>{
           <Route path="/Categorias" element={<Categorias />} />
           <Route path="/Productos" element={<Productos />} />
           <Route path="/catalogo" element={<Catalogo />} />
+          <Route path="/inicio" element={<RutaProtegida vista={<Inicio />} />} />
           <Route path="*" element={<h2>404 - Página no encontrada</h2>} />
         </Routes>
       </main>

@@ -80,9 +80,13 @@ const TablaProductos = ({
               <td>{producto.stock}</td>
               <td>
                 {producto.imagen ? (
-                  <img src={producto.imagen} alt="Producto" style={{ width: "50px", height: "50px" }} />
+                  <img
+                    src={`data:image/png;base64,${producto.imagen}`}
+                    alt={producto.nombre_producto}
+                    style={{ maxWidth: '100px' }}
+                  />
                 ) : (
-                  "Sin imagen"
+                  'Sin imagen'
                 )}
               </td>
               <td>

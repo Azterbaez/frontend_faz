@@ -27,7 +27,7 @@ const Productos = () => {
     imagen: ''
   });
   const generarPDFProductos = () => {
-  
+
     const doc = new jsPDF();
 
     doc.setFillColor(28, 41, 51);
@@ -35,40 +35,37 @@ const Productos = () => {
 
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(28);
-    doc.text("Listado de Productos", doc.internal.gageSize.getWidth() / 2, 18, { aling: "center" });
-  
+    doc.text('Listado de Productos', doc.internal.gageSize.getWidth() / 2, 18, { aling: "center" });
 
-  const columnas = ["ID", "Nombre", "Descripción", "Categoría", "Precio", "Stock"];
-  const filas = productosFiltrados.map((producto) => [
-    producto.id_producto,
-    producto.nombre_producto,
-    producto.descripcion_producto,
-    producto.id_categoria,
-    `C$ ${producto.precio_unitario}`,
-    producto.stock,
-  ]);
 
-  const totalPaginas = "{total_pages_count_string}";
-  if (typeof doc.putTotalPages === 'function') {
-    doc.putTotalPages(totalPaginas);
-  }
 
-  autoTable(doc, {
-    head: [columnas],
-    body: filas,
-    startY: 40,
-    theme: 'grid',
-    styles: { fontSize: 10, cellPadding: 2},
-    margins: { top: 20, left: 14, right: 14 },
-  columnStyles: {
-    0: { cellWidth: 'auto' },
-    1: { cellWidth: 'auto' },
-    2: { cellWidth: 'auto' },
-  },
-  pageBreak: "auto",
-  rowPageBreak: "auto",
+    const columnas = ["ID", "Nombre", "Descripción", "Categoría", "Precio", "Stock"];
+    const filas = productosFiltrados.map((producto) => [
+      producto.id_producto,
+      producto.nombre_producto,
+      producto.descripcion_producto,
+      producto.id_categoria,
+      `C$ ${producto.precio_unitario}`,
+      producto.stock,
+    ]);
 
-  didDrawPage: function (data) {
+    const totalPaginas = "{total_pages_count_string}";
+    autoTable(doc, {
+      head: [columnas],
+      body: filas,
+      startY: 40,
+      theme: 'grid',
+      styles: { fontSize: 10, cellPadding: 2 },
+      margins: { top: 20, left: 14, right: 14 },
+      columnStyles: {
+        0: { cellWidth: 'auto' },
+        1: { cellWidth: 'auto' },
+        2: { cellWidth: 'auto' },
+      },
+      pageBreak: "auto",
+      rowPageBreak: "auto",
+
+      didDrawPage: function (data) {
 
         const alturaPagina = doc.internal.pageSize.getHeight();
         const anchoPagia = doc.internal.pageSize.getWidthe();
@@ -77,20 +74,25 @@ const Productos = () => {
 
         doc.setFontSize(10);
         doc.setTextColor(0, 0, 0);
-        const piePagina = 'Página ${numeroPagina} de ${totalPaginas}';
+        const piePagina = `Página ${numeroPagina} de ${totalPaginas}`;
         doc.text(piePagina, anchoPagia / 2 + 15, alturaPagina - 10, { align: "center" });
       },
-});
+    });
 
-// Guardar el PDF con un nombre basado en la fecha actual
-const fecha = new Date();
-const dia = String(fecha.getDate()).padStart(2, '0');
-const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-const anio = fecha.getFullYear();
-const nombreArchivo = 'Productosos_${dia}${mes}${anio).pdf';
+    if (typeof doc.putTotalPages === 'function') {
+      doc.putTotalPages(totalPaginas);
+    }
 
-doc.save(nombreArchivo);
+    // Guardar el PDF con un nombre basado en la fecha actual
+    const fecha = new Date();
+    const dia = String(fecha.getDate()).padStart(2, '0');
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+    const anio = fecha.getFullYear();
+    const nombreArchivo = `Productosos_${dia}${mes}${anio}.pdf`;
 
+    doc.save(nombreArchivo);
+  
+  
 const generarPDFDetalleProducto = (producto) => {
 const pdf = new jsPDF();
 }
@@ -115,11 +117,13 @@ posiciony  = 40 + altoImagen + 10;
 pdf.setTextColor(8, 9, 8);
 pdf.setFontSize(14);
 
-pdf.text("Descripción: ${producto.descripcion_producto}", anchoPagina /2, posiciony, {align: "center" });
- pdf.text("Categoría: ${producto.id_categoria}", anchoPagina / 2, posiciony + 16, { align: "center" });
-pdf.text("Precio: C$ ${ producto.precio_unitario}", anchoPagina / 2, posiciony + 20, { align: "center" });
-pdf.text("Stock: ${ producto.stock }", anchoPagina / 2, posiciony + 30, {align: "center" });
-pdf.save("${producto.nombre_producto}.pdf");
+pdf.text(`Descripción: ${producto.descripcion_producto}`, anchoPagina /2, posiciony, {align: "center" });
+ pdf.text(`Categoría: ${producto.id_categoria}`, anchoPagina / 2, posiciony + 16, { align: "center" });
+pdf.text(`Precio: C$ ${ producto.precio_unitario}`, anchoPagina / 2, posiciony + 20, { align: "center" });
+pdf.text(`Stock: ${ producto.stock }`, anchoPagina / 2, posiciony + 30, {align: "center" });
+pdf.save(`${producto.nombre_producto}.pdf`);
+
+
 }
 
   const [mostrarModalEdicion, setMostrarModalEdicion] = useState(false);
@@ -148,7 +152,7 @@ pdf.save("${producto.nombre_producto}.pdf");
 
   const guardarEdicion = async () => {
     try {
-      const respuesta = await fetch(`http://localhost:3000/api/actualizarproducto/${productoEditado.id_producto}`, {
+      const respuesta = await fetch(`http://localhost:3000/api/actualizarProductosPatch/${productoEditado.id_producto}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(productoEditado)
@@ -263,16 +267,7 @@ pdf.save("${producto.nombre_producto}.pdf");
             Generar reporte PDF
           </Button>
         </Col>
-     <Col className="generar reporte">
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  className="me-2"
-                  onClick={() => generarPDFDetalleProducto(producto)}
-                >
-                  <i className="bi bi-file-earmark-pdf"></i> PDF
-                </Button>
-              </Col>
+   
       </Row>
 
 
